@@ -1,0 +1,357 @@
+/*
+  Modal fix
+*/
+
+body.modal-open-noscroll {
+    margin-right: 0!important;
+    overflow: hidden;
+}
+
+/* Morph styles */
+
+body.no-scroll {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* /Morph styles */
+
+
+body {
+  font-size:18px;
+  font-family: arial;
+  background-color:#dededc; /*/#e9ebe5;*/
+  font-family:"Crimson Text", arial;
+}
+
+h1, h2, h3 {
+  font-family: "Montserrat",arial;
+}
+
+.about {
+  background-color: #fff;
+  padding:2em 0;
+  background: url("../img/header-bg-10.jpg");
+  background-size: cover;
+  /*filter: sepia(.5);*/
+  /* USE? https://videos.pexels.com/videos/aerial-shot-of-a-lighthouse-721 */
+  box-shadow: 0 1px 6px 2px rgba(0,0,0,.2);
+}
+
+.about h1 {
+  text-align: center;
+  margin:1em 0;
+  color:#fff;
+}
+
+.about__img {
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+  width:100px;
+  height:100px;
+}
+
+time {
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.timeline__title {
+  font-size:1.4rem;
+}
+
+/* Custom timeline */
+
+.timeline {
+  position: relative;
+  padding:2em 0;
+}
+
+.timeline:before {
+  content:"";
+  position: absolute;
+  width:4px;
+  top:0;
+  bottom:0;
+  left:0;
+  margin-left:-2px;
+  background-color:#fff;
+  z-index: -1;
+}
+
+.timeline__block {
+  display: block;
+  margin-bottom:2em;
+  position: relative;
+}
+
+.timeline__block:before {
+  content:"";
+  background-color: #999;
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  margin-left:-6px;
+  margin-top:-6px;
+  left:0;
+  top:50%;
+}
+
+.timeline__block:after {
+  /* clearfix */
+  content: '';
+  display: table;
+  clear: both;
+}
+
+
+.timeline__content-holder {
+  width: 90%;
+  background-color: #fff;
+  float: right;
+}
+
+.timeline__content {
+  display: block;
+  padding:1em;
+  background-color:#fff;
+  position: relative;
+  border-radius: 2px;
+  box-shadow: 0 3px 0 rgba(0,0,0,.05);
+  opacity: 1;
+  transition: opacity .5s;
+  color:#333;
+}
+
+.timeline__content:focus,
+.timeline__content:hover {
+  box-shadow: 10px 10px 20px rgba(0,0,0,.3);
+  outline: none;
+}
+
+.timeline__content:focus .timeline__title,
+.timeline__content:hover .timeline__title {
+  text-decoration: underline;
+}
+
+
+a.timeline__content:link, 
+a.timeline__content:visited,
+a.timeline__content:hover,
+a.timeline__content:active {
+  text-transform: none;
+  text-decoration: none;
+  color:#333;
+} 
+
+
+
+.timeline__block:nth-child(even) .timeline__content-holder {
+  float: right;
+}
+
+
+.timeline__content:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  height: 0;
+  width: 0;
+  border: 7px solid transparent;
+  border-right: 7px solid white;
+  margin-top: -7.5px;
+}
+
+
+.morphingmodal {
+  position: fixed;
+  top:0;
+  bottom:0;
+  visibility: hidden;
+  overflow: hidden;
+} 
+
+.timeline__content-holder.open .morphingmodal {
+  visibility: visible;
+  position: fixed;
+  -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+  transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+  bottom:0;
+  right: 0;
+  max-width: 100%;
+  z-index: 99999;
+  padding:1em;
+  background-color: #fff;
+}
+
+.timeline__content-holder.open .morphingmodal__content {
+  opacity: 0;
+   -webkit-animation: morphOpacity 1s .5s; /* Chrome, Safari, Opera */
+  animation: morphOpacity 1s .5s, moveUp 1s .5s;
+  -webkit-animation-fill-mode: forwards; /* Chrome, Safari, Opera */
+  animation-fill-mode: forwards;
+  transform:translateY(15px);
+}
+
+.timeline__content-holder.open .morphingmodal.closing .morphingmodal__content {
+  opacity: 1;
+  -webkit-animation: morphOpacityOut .5s; /* Chrome, Safari, Opera */
+  animation: morphOpacityOut .5s;
+
+  -webkit-animation-fill-mode: forwards; /* Chrome, Safari, Opera */
+  animation-fill-mode: forwards;
+  transform: translateY(0);
+}
+
+.morphingmodal--close {
+  opacity: 0;
+  -webkit-animation: morphOpacity 1s .5s; /* Chrome, Safari, Opera */
+  animation: morphOpacity 1s .5s;
+  -webkit-animation-fill-mode: forwards; /* Chrome, Safari, Opera */
+  animation-fill-mode: forwards;
+  -webkit-appearance: none;
+  apperance: none;
+  border:none;
+  height:40px;
+  width:40px;
+  border-radius:50%;
+  position: absolute;
+  right:5%;
+  top:1em;
+  background-color: transparent;
+  line-height: 0;
+  background-image:url('data:image/svg+xml;charset=UTF-8,<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52 52" style="enable-background:new 0 0 52 52;" xml:space="preserve"><g><path fill="#999" d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26 S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"/><path fill="#999" d="M35.707,16.293c-0.391-0.391-1.023-0.391-1.414,0L26,24.586l-8.293-8.293c-0.391-0.391-1.023-0.391-1.414,0 s-0.391,1.023,0,1.414L24.586,26l-8.293,8.293c-0.391,0.391-0.391,1.023,0,1.414C16.488,35.902,16.744,36,17,36 s0.512-0.098,0.707-0.293L26,27.414l8.293,8.293C34.488,35.902,34.744,36,35,36s0.512-0.098,0.707-0.293 c0.391-0.391,0.391-1.023,0-1.414L27.414,26l8.293-8.293C36.098,17.316,36.098,16.684,35.707,16.293z"/></g></svg>');
+}
+
+.born {
+  position: relative;
+}
+
+.born:before {
+  content:"";
+  background-color: #999;
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  margin-left: -6px;
+  margin-top: -6px;
+  left: 0;
+  top: -6px;
+}
+
+.born__icon {
+  display: block;
+}
+
+.born__title {
+  font-size:1.5em;
+  color:#999;
+}
+
+/* Chrome, Safari, Opera */ 
+@-webkit-keyframes morphOpacity {
+  from {opacity: 0;}
+  to {opacity: 1;}
+} 
+
+/* Standard syntax */ 
+@keyframes morphOpacity {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+     /* Chrome, Safari, Opera */ 
+@-webkit-keyframes moveUp {
+  to {transform: translateY(0);}
+} 
+
+/* Standard syntax */ 
+@keyframes moveUp {
+  to {transform: translateY(0);}
+}
+
+ /* Chrome, Safari, Opera */ 
+@-webkit-keyframes morphOpacityOut {
+  from {opacity: 1;}
+  to {opacity: 0;}
+} 
+
+/* Standard syntax */ 
+@keyframes morphOpacityOut {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+.timeline__content-holder.open .timeline__content {
+  opacity: 0;
+}
+
+
+/* Mobile first: smaller than 544px */
+
+@media (min-width: 544px) {
+}
+
+@media (min-width: 768px) {
+  .timeline:before {
+    left:50%;
+  }
+
+  .timeline__block:before {
+    left:50%;
+  }
+
+   .timeline__content-holder {
+    width: 45%;
+    background-color: #fff;
+    float:none;
+  }
+
+  .timeline__block:nth-child(even) .timeline__content-holder {
+    float: right;
+  }
+
+  .timeline__content:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    height: 0;
+    width: 0;
+    border: 7px solid transparent;
+    border-right: 7px solid white;
+    margin-top: -7.5px;
+  }
+
+  .timeline__block:nth-child(odd) .timeline__content:after {
+    left:100%;
+    border-left: 7px solid white;
+    border-right: none;
+  }
+
+  .born:before {
+    left: 50%;
+  }
+
+  .born__icon {
+    margin: 0 auto;
+  }
+
+  .born__title {
+    text-align: center;
+  }
+}
+
+@media (min-width: 992px) {
+   body.no-scroll {
+    /* prevent scrollbar content jump */
+    margin-right:17px;
+  }
+}
+
+@media (min-width: 1200px) {
+}
